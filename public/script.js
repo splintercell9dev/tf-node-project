@@ -32,7 +32,7 @@ $(function(){
          submitbtn.prop('disabled', true) ;
          $.ajax({
             type: 'POST',
-            url: '/api/predict',
+            url: 'api/predict',
             data: new FormData(document.getElementById('predictForm')),
             enctype: 'multipart/form-data',
             cache: false,
@@ -54,8 +54,10 @@ $(function(){
                })
             },
             error: function(data){
-               $("#tableContainer").show() ;
-               alert(data)
+               $("#tableContainer").hide() ;
+               if (data){
+                  console.log(data)
+               }
             }
          })
          submitbtn.prop('disabled', false) ;
