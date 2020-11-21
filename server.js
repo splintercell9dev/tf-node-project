@@ -2,17 +2,9 @@
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
-const fs = require('fs')
 const path = require('path')
 const multer = require('multer')
-const storage_options = multer.diskStorage({
-   destination: function(req, file, cb){
-      cb(null, 'uploads')
-   },
-   filename: function(req, file, cb){
-      cb(null, `image${Date.now()+path.extname(file.originalname)}`)
-   }
-})
+const storage_options = multer.memoryStorage()
 const upload = multer({ storage: storage_options }) ;
 const app = express()
 const port = process.env.PORT || 3000
@@ -47,20 +39,15 @@ async function loadModel(){
 
 loadModel()
 
-function readImage(path){
-   const buff = fs.readFileSync(path)
-   const tfimg = tfjsnode.node.decodeImage(buff)
+function readImage(buff){
+   const tfimg = tfjsnode.node.decodeImage(Buffer.from(buff, 'base64'))
    return tfimg
 }
 
-async function classifyImage(path){
-   const img = readImage(path)
+async function classifyImage(buff){
+   const img = readImage(buff)
    const predictions = await model.classify(img)
    return predictions
-}
-
-function deleteFile(path){
-   fs.unlinkSync(path)
 }
 
 app.get('/', (req, res) => {
@@ -70,18 +57,14 @@ app.get('/', (req, res) => {
 app.post('/api/predict', upload.single('image') ,(req, res) => {
    
    if (req.file){
-      classifyImage(req.file.path).then( result => {
+      classifyImage(req.file.buffer).then( result => {
          res.send(JSON.stringify(result.sort( (a, b) => b.probability - a.probability)))
-         deleteFile(req.file.path)
       }).catch( err => {
-         res.status(400).send(err) ;
-         deleteFile(req.file.path)
+         res.status(400).send('Error occurred while classification', err) ;
       })
    }
    else{
       res.status(400).send('Error occurred File not recieved to the server')
-      deleteFile(req.file.path)
-
    }
 }) ;
 
