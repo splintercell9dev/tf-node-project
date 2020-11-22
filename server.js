@@ -60,7 +60,7 @@ app.post('/api/predict', upload.single('image') ,(req, res) => {
       classifyImage(req.file.buffer).then( result => {
          res.send(JSON.stringify(result.sort( (a, b) => b.probability - a.probability)))
       }).catch( err => {
-         res.status(400).send('Error occurred while classification', err) ;
+         res.status(400).send(err) ;
       })
    }
    else{

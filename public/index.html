@@ -15,14 +15,14 @@
 </head>
 <body>
    
-   <nav class="navbar sticky-top navbar-dark bg-info">
+   <nav class="navbar sticky-top navbar-dark bg-dark">
       <a href="#" class="navbar-brand">
          <img src="./images/brand.svg" lading="lazy" width=30>
          Brand Name
       </a>
       <ul class="navbar-nav ml-auto text-light">
          <li class="nav-item active">
-            <button class="btn btn-secondary">About Us</button>
+            <button class="btn btn-outline-light" data-toggle="modal" data-target="#aboutModal">About Us</button>
          </li>
       </ul>
    </nav>
@@ -30,11 +30,17 @@
    <div class="container image-container mt-3 mb-3">
       <img src="" id="showImage">
    </div>
+
+   <div class="container mt-5 mb-3">
+      <h2 class="p-2 text-justify">
+         Simple Image Classifier Upload any image in the specified format in the below form and get predictions on that:
+      </h2>
+   </div>
    
    <form class="container px-4 mt-4" id="predictForm">
       <label for="inputFile">Select a file for Prediction</label>
       <input type="file" class="form-control-file" name="image" id="inputFile" accept=".bmp, .jpg, .png">
-      <div class="mt-3">
+      <div class="mt-3" id="buttonContainer">
          <input type="submit" id="submit" class="btn btn-outline-primary" value="Predict">
       </div>
    </form>
@@ -49,6 +55,34 @@
          <tbody id="tableBody">
          </tbody>
       </table>
+   </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="aboutModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">About this Website</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+               <p>This website is only meant for classification of certain images that are being provided by the user and uploading them to the server. This demo project current uses MobileNet Tensorflow model for classifying images that are being porvided by the user. It's a pre-trained model that can be directly used inside node.js server ready to make predictions based on the images.</p>
+               <p>This website doesnot store the images on the server so, privacy is maintained for the images that are being uploaded.</p>
+            </div>
+
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- When prediction fails -->
+   <div class="container my-3 text-center" id="fail">
+      <h5><strong>Failed to predict</strong></h5>
    </div>
 </body>
 </html>

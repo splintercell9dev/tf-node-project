@@ -11,6 +11,18 @@ div.image-container{
    display: none ;
 }
 
+#buttonContainer{
+   text-align: center;
+}
+
+#submit{
+   width: 25% ;
+}
+
+#fail{
+   display: none;
+}
+
 #showImage{
    /* display: none; */
    border: 1px solid black;

@@ -42,19 +42,27 @@ $(function(){
                const results = JSON.parse(data)
                let html = '' ;
                $("#tableBody").html(html) ;
-               results.forEach( (res, index) => {
-                  html = `<tr>
-                           <td>${index+1}</td>
-                           <td>${res.className}</td>
-                           <td>${(res.probability * 100).toFixed(6)} %</td>
-                          </tr> ` ;
-
-                  $("#tableBody").append(html) ;
-                  $("#tableContainer").show() ;
-               })
+               
+               if (results.length){
+                  results.forEach( (res, index) => {
+                     html = `<tr>
+                              <td>${index+1}</td>
+                              <td>${res.className}</td>
+                              <td>${(res.probability * 100).toFixed(6)} %</td>
+                             </tr> ` ;
+   
+                     $("#tableBody").append(html) ;
+                     $("#fail").hide()
+                     $("#tableContainer").show() ;
+                  })
+               }
+               else{
+                  $("#fail").show() ;
+               }
             },
             error: function(data){
                $("#tableContainer").hide() ;
+               $("#fail").show() ;
                if (data){
                   console.log(data)
                }
@@ -62,6 +70,5 @@ $(function(){
          })
          submitbtn.prop('disabled', false) ;
       }
-
    })
 }) ;
