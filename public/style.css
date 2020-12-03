@@ -3,6 +3,24 @@
    margin: 0;
 }
 
+html, body{
+   width: 100% ;
+   height: 100% ;
+}
+
+body{
+   background-image: url('./images/background/bg_large.jpg');
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   overflow-y: auto;
+}
+
+#inputFile::placeholder{
+   font-weight: bold ;
+}
+
 div.image-container{
    display: none;
 }
@@ -35,5 +53,17 @@ div.image-container{
 @media (max-width: 599px){
    #showImage{
       width: 300px ;
+   }
+}
+
+@media only screen and (max-width: 1280px){
+   body{
+      background-image: url('./images/background/bg_medium.jpg');
+   }
+}
+
+@media only screen and (max-width: 600px){
+   body{
+      background-image: url('./images/background/bg_small.jpg');
    }
 }
