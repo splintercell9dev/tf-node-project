@@ -15,7 +15,7 @@ $(function(){
       }
       else{
          imgContainer.hide() ;
-         $('#tableContainer').hide()
+         $('#result').hide()
       }
    }) ;
 
@@ -39,29 +39,19 @@ $(function(){
             processData: false,
             contentType: false,
             success: function(data){
-               const results = JSON.parse(data)
+               const results = data ;
                let html = '' ;
-               $("#tableBody").html(html) ;
-               
-               if (results.length){
-                  results.forEach( (res, index) => {
-                     html = `<tr>
-                              <td>${index+1}</td>
-                              <td>${res.className}</td>
-                              <td>${(res.probability * 100).toFixed(6)} %</td>
-                             </tr> ` ;
-   
-                     $("#tableBody").append(html) ;
-                     $("#fail").hide()
-                     $("#tableContainer").show() ;
-                  })
+               $('#result').show() ;
+               if (results){
+                  $('#result').html(results) ;
                }
                else{
                   $("#fail").show() ;
+                  $('#result').html(html) ;
                }
             },
             error: function(data){
-               $("#tableContainer").hide() ;
+               $("#result").hide() ;
                $("#fail").show() ;
                if (data){
                   console.log(data)
